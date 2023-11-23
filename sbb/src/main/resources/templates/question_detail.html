@@ -1,0 +1,22 @@
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <div class="flex aic jcsb">
+            <h2 th:text="${question.subject}"></h2>
+            <span class="date" th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+        </div>
+        <p th:text="${question.content}"></p>
+        <h3 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h3>
+
+        <ul>
+            <li th:each="answer : ${question.answerList}">
+                <span th:text="${answer.content}"></span>
+                <span th:text="${#temporals.format(answer.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+            </li>
+        </ul>
+
+        <form th:action="@{|/answer/create/${question.id}|}" method="post">
+            <textarea name="content" id="content" cols="30" rows="10"></textarea>
+            <input type="submit" value="답변등록">
+        </form>
+    </div>
+</html>
